@@ -1,0 +1,55 @@
+From b9c82db546282dd86c6c4c006f03667f32b4a0ce Mon Sep 17 00:00:00 2001
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+Date: Sat, 25 Jan 2020 19:01:34 +0100
+Subject: [PATCH 2/3] stm32mp157a-dk1: config: fix CAN driver support
+
+The selected drivers do not exist in the SoC.
+Update the drivers and network layer selections.
+
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+---
+ arch/arm/configs/multi_v7_defconfig | 28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
+
+diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+index ac1e50b2a3e8..f68aa4d744cd 100644
+--- a/arch/arm/configs/multi_v7_defconfig
++++ b/arch/arm/configs/multi_v7_defconfig
+@@ -154,13 +154,27 @@ CONFIG_IPV6_MIP6=m
+ CONFIG_IPV6_TUNNEL=m
+ CONFIG_IPV6_MULTIPLE_TABLES=y
+ CONFIG_NET_DSA=m
+-CONFIG_CAN=y
+-CONFIG_CAN_AT91=m
+-CONFIG_CAN_FLEXCAN=m
+-CONFIG_CAN_SUN4I=y
+-CONFIG_CAN_XILINXCAN=y
+-CONFIG_CAN_RCAR=m
+-CONFIG_CAN_MCP251X=y
++CONFIG_NET_EMATCH=y
++CONFIG_NET_EMATCH_STACK=32
++CONFIG_NET_EMATCH_CMP=m
++CONFIG_NET_EMATCH_NBYTE=m
++CONFIG_NET_EMATCH_U32=m
++CONFIG_NET_EMATCH_META=m
++CONFIG_NET_EMATCH_TEXT=m
++CONFIG_NET_EMATCH_CANID=m
++CONFIG_CAN=m
++CONFIG_CAN_RAW=m
++CONFIG_CAN_BCM=m
++CONFIG_CAN_GW=m
++CONFIG_CAN_VCAN=m
++CONFIG_CAN_VXCAN=m
++CONFIG_CAN_DEV=m
++CONFIG_CAN_CALC_BITTIMING=y
++CONFIG_CAN_M_CAN=m
++CONFIG_CAN_8DEV_USB=m
++CONFIG_CAN_GS_USB=m
++CONFIG_CAN_PEAK_USB=m
++CONFIG_CAN_MCP251X=m
+ CONFIG_BT=m
+ CONFIG_BT_HCIUART=m
+ CONFIG_BT_HCIUART_BCM=y
+-- 
+2.20.1
+

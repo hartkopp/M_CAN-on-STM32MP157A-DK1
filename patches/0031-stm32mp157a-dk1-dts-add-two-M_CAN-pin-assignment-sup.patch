@@ -1,0 +1,126 @@
+From df02f188197916bd0da5aad8ceb4cdccd21a2c15 Mon Sep 17 00:00:00 2001
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+Date: Sun, 26 Jan 2020 15:30:23 +0100
+Subject: [PATCH 1/3] stm32mp157a-dk1: dts: add two M_CAN pin assignment
+ support
+
+This patch routes the pins of the two M_CAN IP cores to the CN2 GPIO connector.
+See Discovery kits with STM32MP157 MPUs - User manual
+(DevKit-en.DM00591354.pdf page 31 & 32)
+
+Pin 05 -> PA11 : FDCAN1_RX (also I2C5_SCL)
+Pin 03 -> PA12 : FDCAN1_TX (also I2C5_SDA)
+
+Pin 10 -> PB12 : FDCAN2_RX (also USART3_RX)
+Pin 36 -> PB13 : FDCAN2_TX (also USART3_CTS)
+
+I2C5 and USART3 were *already* both set to "disabled" in this file before.
+So we won't have any interference on these pins.
+
+Complete connection of two MCP 2562FD-E/SN CAN FD transceivers:
+
+FCDAN1:
+TRX Pin 1 (TX)  <-> CN2 Pin 03 (FDCAN1_TX)
+TRX Pin 2 (GND) <-> CN2 Pin 06 (GND)
+TRX Pin 3 (+5V) <-> CN2 Pin 02 (+5V)
+TRX Pin 4 (RX)  <-> CN2 Pin 05 (FDCAN1_RX)
+TRX Pin 5 (+3V) <-> CN2 Pin 01 (+3V)
+TRX Pin 6 (CL)  <-> CAN_L to SUB-D9 Pin 2 (can0)
+TRX Pin 7 (CH)  <-> CAN_H to SUB-D9 Pin 7 (can0)
+TRX Pin 8 (GND) <-> CN2 Pin 09 (GND)
+
+FCDAN2:
+TRX Pin 1 (TX)  <-> CN2 Pin 36 (FDCAN2_TX)
+TRX Pin 2 (GND) <-> CN2 Pin 20 (GND)
+TRX Pin 3 (+5V) <-> CN2 Pin 04 (+5V)
+TRX Pin 4 (RX)  <-> CN2 Pin 10 (FDCAN2_RX)
+TRX Pin 5 (+3V) <-> CN2 Pin 17 (+3V)
+TRX Pin 6 (CL)  <-> CAN_L to SUB-D9 Pin 2 (can1)
+TRX Pin 7 (CH)  <-> CAN_H to SUB-D9 Pin 7 (can1)
+TRX Pin 8 (GND) <-> CN2 Pin 14 (GND)
+
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+---
+ arch/arm/boot/dts/stm32mp157-pinctrl.dtsi | 40 +++++++++++++++++++++++
+ arch/arm/boot/dts/stm32mp157a-dk1.dts     | 14 ++++++++
+ 2 files changed, 54 insertions(+)
+
+diff --git a/arch/arm/boot/dts/stm32mp157-pinctrl.dtsi b/arch/arm/boot/dts/stm32mp157-pinctrl.dtsi
+index dd796ec03816..13b2366439a2 100644
+--- a/arch/arm/boot/dts/stm32mp157-pinctrl.dtsi
++++ b/arch/arm/boot/dts/stm32mp157-pinctrl.dtsi
+@@ -651,6 +651,46 @@
+ 				};
+ 			};
+ 
++			m_can1_pins_b: m-can1-1 {
++				pins1 {
++					pinmux = <STM32_PINMUX('A', 12, AF9)>; /* CAN1_TX */
++					slew-rate = <0>;
++					drive-push-pull;
++					bias-disable;
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('A', 11, AF9)>; /* CAN1_RX */
++					bias-disable;
++				};
++			};
++
++			m_can1_sleep_pins_b: m_can1-sleep-1 {
++				pins {
++					pinmux = <STM32_PINMUX('A', 12, ANALOG)>, /* CAN1_TX */
++						 <STM32_PINMUX('A', 11, ANALOG)>; /* CAN1_RX */
++				};
++			};
++
++			m_can2_pins_a: m-can2-0 {
++				pins1 {
++					pinmux = <STM32_PINMUX('B', 13, AF9)>; /* CAN2_TX */
++					slew-rate = <0>;
++					drive-push-pull;
++					bias-disable;
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('B', 12, AF9)>; /* CAN2_RX */
++					bias-disable;
++				};
++			};
++
++			m_can2_sleep_pins_a: m_can2-sleep-0 {
++				pins {
++					pinmux = <STM32_PINMUX('B', 13, ANALOG)>, /* CAN2_TX */
++						 <STM32_PINMUX('B', 12, ANALOG)>; /* CAN2_RX */
++				};
++			};
++
+ 			pwm1_pins_a: pwm1-0 {
+ 				pins {
+ 					pinmux = <STM32_PINMUX('E', 9, AF1)>, /* TIM1_CH1 */
+diff --git a/arch/arm/boot/dts/stm32mp157a-dk1.dts b/arch/arm/boot/dts/stm32mp157a-dk1.dts
+index 2b01a01d18b5..e135bb6b98d7 100644
+--- a/arch/arm/boot/dts/stm32mp157a-dk1.dts
++++ b/arch/arm/boot/dts/stm32mp157a-dk1.dts
+@@ -193,6 +193,20 @@
+ 	};
+ };
+ 
++&m_can1 {
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&m_can1_pins_b>;
++	pinctrl-1 = <&m_can1_sleep_pins_b>;
++	status = "okay";
++};
++
++&m_can2 {
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&m_can2_pins_a>;
++	pinctrl-1 = <&m_can2_sleep_pins_a>;
++	status = "okay";
++};
++
+ &gpu {
+ 	contiguous-area = <&gpu_reserved>;
+ 	status = "okay";
+-- 
+2.20.1
+
