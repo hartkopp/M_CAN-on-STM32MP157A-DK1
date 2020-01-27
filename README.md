@@ -17,7 +17,7 @@ Transceiver on old IDE cable
 
 ### Software setup
 
-In fact the STM wiki is very good and up-to-date, so it can be followed to set up your system to build your own Linux kernel: ![Installing the Linux kernel](https://wiki.st.com/stm32mpu/wiki/STM32MP1_Developer_Package#Installing_the_Linux_kernel)
+In fact the STM wiki is very good and up-to-date, so it can be followed to set up your system to build your own Linux kernel: [Installing the Linux kernel](https://wiki.st.com/stm32mpu/wiki/STM32MP1_Developer_Package#Installing_the_Linux_kernel)
 
 The key points:
 * Install the SDK
@@ -25,13 +25,13 @@ The key points:
 
 **Before compiling the kernel** with the cross compiler from the SDK **the following 3 patches need to be copied** to the existing 30 patches in the `linux-stm32mp-4.19-r0` directory:
 
-* ![0031-stm32mp157a-dk1-dts-add-two-M_CAN-pin-assignment-sup.patch](/patches/0031-stm32mp157a-dk1-dts-add-two-M_CAN-pin-assignment-sup.patch) (dts tree mod: route CAN pins to CN2)
-* ![0032-stm32mp157a-dk1-config-fix-CAN-driver-support.patch](/patches/0032-stm32mp157a-dk1-config-fix-CAN-driver-support.patch) (modification of default config for -better CAN support)
-* ![0033-can-m_can-implement-errata-Needless-activation-of-MR.patch](/patches/0033-can-m_can-implement-errata-Needless-activation-of-MR.patch) (missing M_CAN patch from ![4.19.y stable](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/?h=linux-4.19.y) tree)
+* [0031-stm32mp157a-dk1-dts-add-two-M_CAN-pin-assignment-sup.patch](/patches/0031-stm32mp157a-dk1-dts-add-two-M_CAN-pin-assignment-sup.patch) (dts tree mod: route CAN pins to CN2)
+* [0032-stm32mp157a-dk1-config-fix-CAN-driver-support.patch](/patches/0032-stm32mp157a-dk1-config-fix-CAN-driver-support.patch) (modification of default config for -better CAN support)
+* [0033-can-m_can-implement-errata-Needless-activation-of-MR.patch](/patches/0033-can-m_can-implement-errata-Needless-activation-of-MR.patch) (missing M_CAN patch from [4.19.y stable](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/?h=linux-4.19.y) tree)
 
-The 3 patches can be found in the ![patches](/patches) directory.
+The 3 patches can be found in the [patches](/patches) directory.
 
-After copying the 3 patches to the `linux-stm32mp-4.19-r0` directory just follow the steps in the **README.HOW_TO.txt** which can also be found in that directory to build and finally install the new kerenel on the traget. **The README.HOW_TO.txt helper file is THE reference for the Linux kernel build** states the wiki - and they are right.
+After copying the 3 patches to the `linux-stm32mp-4.19-r0` directory just follow the steps in the [README.HOW_TO.txt](https://wiki.st.com/stm32mpu/nsfr_img_auth.php/b/b9/Linux.README.HOW_TO.txt) which can also be found in that directory to build and finally install the new kerenel on the traget. **The README.HOW_TO.txt helper file is THE reference for the Linux kernel build** states the wiki - and they are right.
 
 ### Hardware setup
 
