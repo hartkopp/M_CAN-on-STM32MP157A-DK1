@@ -13,7 +13,7 @@ The final setup could probably look like this:
  
 ![Transceiver on old IDE cable](/pictures/MCAN-TRX-Hardware.jpg)
 
-Transceiver on old IDE cable
+Two CAN transceivers sticked on an old IDE cable
 
 ### Software setup
 
@@ -31,10 +31,8 @@ The key points:
 
 The 3 patches can be found in the [patches](/patches) directory.
 
-After copying the 3 patches to the `linux-stm32mp-4.19-r0` directory just follow the steps in the [README.HOW_TO.txt](https://wiki.st.com/stm32mpu/nsfr_img_auth.php/b/b9/Linux.README.HOW_TO.txt) which can also be found in that directory to build and finally install the new kernel on the traget. **The README.HOW_TO.txt helper file is THE reference for the Linux kernel build** states the wiki - and they are right.
+After copying the 3 patches to the `linux-stm32mp-4.19-r0` directory just follow the steps in the [README.HOW_TO.txt](https://wiki.st.com/stm32mpu/nsfr_img_auth.php/b/b9/Linux.README.HOW_TO.txt) which can also be found in that directory to build and finally install the new kernel on the traget. The STM wiki states: **The README.HOW_TO.txt helper file is THE reference for the Linux kernel build** - and they are right.
 
 ### Hardware setup
 
-
-
-
+(info can be found in the fist patch - to be continued)
