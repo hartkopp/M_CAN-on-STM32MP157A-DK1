@@ -26,7 +26,7 @@ The key points:
 **Before compiling the kernel** with the cross compiler from the SDK **the following 3 patches need to be copied** to the **existing 30 patches** in the `linux-stm32mp-4.19-r0` directory:
 
 * [0031-stm32mp157a-dk1-dts-add-two-M_CAN-pin-assignment-sup.patch](/patches/0031-stm32mp157a-dk1-dts-add-two-M_CAN-pin-assignment-sup.patch) (dts tree mod: route CAN pins to CN2)
-* [0032-stm32mp157a-dk1-config-fix-CAN-driver-support.patch](/patches/0032-stm32mp157a-dk1-config-fix-CAN-driver-support.patch) (modification of default config for -better CAN support)
+* [0032-stm32mp157a-dk1-config-fix-CAN-driver-support.patch](/patches/0032-stm32mp157a-dk1-config-fix-CAN-driver-support.patch) (modification of default config for *better* CAN support)
 * [0033-can-m_can-implement-errata-Needless-activation-of-MR.patch](/patches/0033-can-m_can-implement-errata-Needless-activation-of-MR.patch) ([missing M_CAN patch](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit?h=linux-4.19.y&id=486954277fc1e18da5cf6c3110296b443cdecbaa) from [4.19.y stable](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/?h=linux-4.19.y) tree)
 
 These 3 patches can be found in the [patches](/patches) directory.
@@ -73,7 +73,8 @@ CAN_L | 6 | -  | (CAN_L to SUB-D9 pin 2)
 CAN_H | 7 | -  | (CAN_H to SUB-D9 pin 7)
 STBY  | 8 | 14 | GND
 
-I made an ugly sketch before soldering my head-to-head PCBs which also depicts a change as I didn't get the DTS right at the first time. Only specific pins can be used to route the CAN IP connections. See Discovery kits with STM32MP157 MPUs - User manual (DevKit-en.DM00591354.pdf page 31 & 32).
+I made an ugly sketch before soldering my head-to-head PCBs which also depicts a change as I didn't get the DTS right at the first time. Only specific pins can be used to route the CAN IP connections.
+See details in "Discovery kits with STM32MP157 MPUs - User manual" (DevKit-en.DM00591354.pdf page 31 & 32).
 
 Function | BGA pin | CN2 pin
 -------- | ------- | -------
